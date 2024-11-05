@@ -15,7 +15,7 @@
   <build_depend>cv_bridge</build_depend>
   <build_depend>image_transport</build_depend>
   <build_depend>rospy</build_depend>
-  <build_depend>tf</build_depend>
+  <build_depend>tf2_ros</build_depend>
 
   <exec_depend>rclcpp</exec_depend>
   <test_depend>ament_cmake_clang_format</test_depend>
