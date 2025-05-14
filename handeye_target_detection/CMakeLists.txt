@@ -64,6 +64,7 @@ target_link_libraries(pose_estimation
   ${rclcpp_LIBRARIES}
   ${OpenCV_LIBS}
 )
+target_compile_definitions(pose_estimation PUBLIC CV_BRIDGE_VERSION_MAJOR=${cv_bridge_VERSION_MAJOR} CV_BRIDGE_VERSION_MINOR=${cv_bridge_VERSION_MINOR})
 
 # Install target files
 install(

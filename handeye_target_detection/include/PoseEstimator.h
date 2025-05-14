@@ -17,7 +17,11 @@
 #define POSEESTIMATOR_H
 
 // ROS include
+#if CV_BRIDGE_VERSION_MAJOR > 3 || (CV_BRIDGE_VERSION_MAJOR == 3 && CV_BRIDGE_VERSION_MINOR >= 5)
+#include <cv_bridge/cv_bridge.hpp>
+#else
 #include <cv_bridge/cv_bridge.h>
+#endif
 #include <image_transport/image_transport.hpp>
 #include <tf2/LinearMath/Matrix3x3.h>
 #include <tf2/LinearMath/Quaternion.h>

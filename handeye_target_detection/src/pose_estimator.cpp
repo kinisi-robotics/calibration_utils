@@ -330,7 +330,7 @@ void PoseEstimator::imageCB_ARUCO(const sensor_msgs::msg::Image::ConstSharedPtr&
         // If at least one board marker detected
         if (valid > 0)
         {
-          cv::aruco::drawAxis(imageColor, camera_matrix_, dist_coeffs_, rvect, tvect, 0.1);
+          cv::drawFrameAxes(imageColor, camera_matrix_, dist_coeffs_, rvect, tvect, 0.1);
           tf2::Quaternion q;
           rotationVectorToTF2Quaternion(q, rvect);
           geometry_msgs::msg::TransformStamped transform_stamped;
@@ -397,7 +397,7 @@ void PoseEstimator::imageCB_CHARUCO(const sensor_msgs::msg::Image::ConstSharedPt
                                                            dist_coeffs_, rvect, tvect);
           if (valid)
           {
-            cv::aruco::drawAxis(imageColor, camera_matrix_, dist_coeffs_, rvect, tvect, 0.1);
+            cv::drawFrameAxes(imageColor, camera_matrix_, dist_coeffs_, rvect, tvect, 0.1);
             tf2::Quaternion q;
             rotationVectorToTF2Quaternion(q, rvect);
             geometry_msgs::msg::TransformStamped transform_stamped;
