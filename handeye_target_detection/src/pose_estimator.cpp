@@ -76,7 +76,7 @@ PoseEstimator::PoseEstimator(std::shared_ptr<rclcpp::Node>& node, std::string pa
   disctionary_map_["DICT_7X7_100"] = cv::aruco::DICT_7X7_100;
   disctionary_map_["DICT_7X7_250"] = cv::aruco::DICT_7X7_250;
   disctionary_map_["DICT_7X7_1000"] = cv::aruco::DICT_7X7_1000;
-  std::map<std::string, cv::aruco::PREDEFINED_DICTIONARY_NAME>::iterator it = disctionary_map_.find(dictionary);
+  std::map<std::string, int>::iterator it = disctionary_map_.find(dictionary);
   if (it != disctionary_map_.end())
     dictionary_ = disctionary_map_[dictionary];
   else
@@ -307,9 +307,9 @@ void PoseEstimator::imageCB_ARUCO(const sensor_msgs::msg::Image::ConstSharedPtr&
       cv_bridge::CvImagePtr cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::MONO8);
 
       // Detect aruco board
-      cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(dictionary_);
-      cv::Ptr<cv::aruco::GridBoard> board = cv::aruco::GridBoard::create(width_, height_, aruco_board_marker_size_,
-                                                                         aruco_board_marker_seperation_, dictionary);
+      cv::Ptr<cv::aruco::Dictionary> dictionary = cv::makePtr<cv::aruco::Dictionary>(cv::aruco::getPredefinedDictionary(dictionary_));
+      cv::Ptr<cv::aruco::GridBoard> board = cv::makePtr<cv::aruco::GridBoard>(
+          cv::Size(width_, height_), aruco_board_marker_size_, aruco_board_marker_seperation_, *dictionary);
       std::vector<int> ids;
       std::vector<std::vector<cv::Point2f>> corners;
       cv::aruco::detectMarkers(cv_ptr->image, dictionary, corners, ids);
@@ -368,9 +368,9 @@ void PoseEstimator::imageCB_CHARUCO(const sensor_msgs::msg::Image::ConstSharedPt
       cv_bridge::CvImagePtr cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::MONO8);
 
       // Detect ChArUco
-      cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(dictionary_);
-      cv::Ptr<cv::aruco::CharucoBoard> board = cv::aruco::CharucoBoard::create(
-          width_, height_, charuco_board_square_size_, charuco_board_marker_size_, dictionary);
+      cv::Ptr<cv::aruco::Dictionary> dictionary = cv::makePtr<cv::aruco::Dictionary>(cv::aruco::getPredefinedDictionary(dictionary_));
+      cv::Ptr<cv::aruco::CharucoBoard> board = cv::makePtr<cv::aruco::CharucoBoard>(
+          cv::Size(width_, height_), charuco_board_square_size_, charuco_board_marker_size_, *dictionary);
       cv::Ptr<cv::aruco::DetectorParameters> params_ptr(new cv::aruco::DetectorParameters());
 #if CV_MINOR_VERSION == 2
       params_ptr->doCornerRefinement = true;
