@@ -105,8 +105,8 @@ private:
   };
   Patterns calibration_pattern_;
   std::map<std::string, Patterns> pattern_map_;
-  cv::aruco::PREDEFINED_DICTIONARY_NAME dictionary_;
-  std::map<std::string, cv::aruco::PREDEFINED_DICTIONARY_NAME> disctionary_map_;
+  int dictionary_;  // Changed from PREDEFINED_DICTIONARY_NAME for OpenCV 4.10+ compatibility
+  std::map<std::string, int> disctionary_map_;
   std::string path_;
 };
 
